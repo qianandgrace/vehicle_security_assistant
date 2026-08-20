@@ -1,0 +1,4 @@
+﻿mode,collection,faithfulness,answer_relevancy,context_precision,context_recall
+rewrite,md_hype_collection,0.9389,0.7843,0.7068,0.8167
+route,md_hype_collection,0.9353,0.8279,0.7806,0.8833
+hyde,md_collection,0.9112,0.6312,0.5039,0.6167
