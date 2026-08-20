@@ -41,7 +41,7 @@ MODEL_CONFIGS = {
     "deepseek": {
         "base_url": os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1"),
         "api_key": os.getenv("DEEPSEEK_API_KEY"),
-        "chat_model": "deepseek-chat",
+        "chat_model": "deepseek-v4-flash",
     },
     "vllm": {
         "base_url": "http://ai.bygpu.com:58132/v1",

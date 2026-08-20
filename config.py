@@ -22,6 +22,11 @@ RES_DIR = PROJECT_ROOT / "res"             # 对比结果与报告
 # 默认 deepseek；若 DeepSeek 余额不足，可临时设为 qwen 或 openai。
 LLM_TYPE = os.getenv("LLM_TYPE", "deepseek")
 
+# 索引构建（Proposition/HyPE 的 LLM 生成）使用的供应商。
+# deepseek-v4-flash 对"提取命题/JSON 数组"这类长列表生成会挂起，
+# 故默认用 qwen（中文质量好、稳定），可用环境变量 INDEX_LLM_TYPE 覆盖。
+INDEX_LLM_TYPE = os.getenv("INDEX_LLM_TYPE", "qwen")
+
 LLM_CONFIGS = {
     "deepseek": {
         "api_key": os.getenv("DEEPSEEK_API_KEY"),
@@ -53,6 +58,10 @@ MILVUS_URI = "http://localhost:19530"
 DB_NAME = "vehicle"
 PDF_COLLECTION = "pdf_collection"
 MD_COLLECTION = "md_collection"
+# 优化方案集合
+SEMANTIC_COLLECTION = "md_semantic_collection"
+PROPOSITION_COLLECTION = "md_proposition_collection"
+HYPE_COLLECTION = "md_hype_collection"
 
 # ---------- 分块 / 检索 ----------
 CHUNK_SIZE = 512
@@ -62,6 +71,8 @@ TOP_K = 5
 # ---------- 测试集 / 评测结果 ----------
 TESTSET_JSON = OUTPUT_DIR / "testset.json"
 TESTSET_CSV = OUTPUT_DIR / "testset.csv"
+TESTSET_30 = OUTPUT_DIR / "testset_30.json"  # 精简后的优化评测集
+OPT_RES_DIR = RES_DIR / "optimization"        # 优化方案对比结果
 EVAL_PDF_CSV = RES_DIR / "eval_pdf.csv"
 EVAL_MD_CSV = RES_DIR / "eval_md.csv"
 REPORT_MD = RES_DIR / "对比报告.md"

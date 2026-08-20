@@ -1,7 +1,9 @@
 """LLM 与 bge embedding 的统一初始化。
 
-LLM 供应商由 config.LLM_TYPE 决定（deepseek | qwen | openai），
-可用环境变量 LLM_TYPE 切换。
+- get_llm()        : 评测/问答用 LLM（由 config.LLM_TYPE 决定，默认 deepseek-v4-flash）
+- get_index_llm()  : 索引构建（Proposition/HyPE 生成）用 LLM（由 config.INDEX_LLM_TYPE 决定，默认 qwen）
+  原因：deepseek-v4-flash 对"提取命题/假设性问题（长 JSON/列表）"这类提示会挂起，
+  而 qwen-max / gpt-4o-mini 表现稳定。
 """
 from functools import lru_cache
 
@@ -10,24 +12,39 @@ from langchain_openai import ChatOpenAI
 
 from config import (
     EMBEDDING_MODEL,
+    INDEX_LLM_TYPE,
     LLM_API_KEY,
     LLM_BASE_URL,
+    LLM_CONFIGS,
     LLM_MODEL,
     LLM_TEMPERATURE,
     LLM_TYPE,
 )
 
 
-@lru_cache(maxsize=1)
-def get_llm() -> ChatOpenAI:
-    """返回当前配置的 LLM 实例（ChatOpenAI 兼容接口，复用单例）。"""
+def _build_llm(llm_type: str, *, max_tokens: int | None = None) -> ChatOpenAI:
+    cfg = LLM_CONFIGS[llm_type]
     return ChatOpenAI(
-        api_key=LLM_API_KEY,
-        base_url=LLM_BASE_URL,
-        model=LLM_MODEL,
+        api_key=cfg["api_key"],
+        base_url=cfg["base_url"],
+        model=cfg["model"],
         temperature=LLM_TEMPERATURE,
         max_retries=2,
+        timeout=90,
+        max_tokens=max_tokens,
     )
+
+
+@lru_cache(maxsize=1)
+def get_llm() -> ChatOpenAI:
+    """返回当前配置的评测/问答 LLM 实例（默认 deepseek-v4-flash）。"""
+    return _build_llm(LLM_TYPE)
+
+
+@lru_cache(maxsize=1)
+def get_index_llm() -> ChatOpenAI:
+    """返回索引构建（Proposition/HyPE 生成）LLM 实例（默认 qwen-max）。"""
+    return _build_llm(INDEX_LLM_TYPE, max_tokens=3000)
 
 
 # 向后兼容别名

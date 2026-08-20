@@ -1,0 +1,5 @@
+﻿方案,collection,faithfulness,answer_relevancy,context_precision,context_recall
+基线 MD(512),md_collection,0.8895,0.6934,0.4972,0.65
+Semantic 语义切块,md_semantic_collection,0.9365,0.553,0.4196,0.5
+Proposition 命题,md_proposition_collection,0.8569,0.7496,0.68,0.7667
+HyPE 假设性问题,md_hype_collection,0.8897,0.8363,0.7856,0.8833
