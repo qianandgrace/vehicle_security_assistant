@@ -1,0 +1,5 @@
+﻿context_method,faithfulness,answer_relevancy,context_precision,context_recall
+rse,0.9509,0.8643,0.7655,0.95
+window,0.9458,0.8542,0.6873,1.0
+compress,0.6894,0.7063,0.938,0.8667
+ushape,0.9368,0.8608,0.7769,0.9667

@@ -53,6 +53,11 @@ LLM_TEMPERATURE = 0.0
 # ---------- Embedding (bge large) ----------
 EMBEDDING_MODEL = "BAAI/bge-large-zh-v1.5"
 
+# ---------- 本地 LLM (ollama) ----------
+# 本机已装 ollama 并拉取 qwen2:7b（4-bit，可在 4060 8G 显存运行）
+OLLAMA_BASE_URL = "http://localhost:11434"
+OLLAMA_MODEL = "qwen2:latest"
+
 # ---------- Milvus ----------
 MILVUS_URI = "http://localhost:19530"
 DB_NAME = "vehicle"
