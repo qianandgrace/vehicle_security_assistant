@@ -1,0 +1,5 @@
+﻿method,faithfulness,answer_relevancy,context_precision,context_recall
+rrf,0.9544,0.8512,0.815,0.9667
+crossencoder,0.8925,0.8405,0.78,0.9
+rankllm,0.8961,0.6064,0.4846,0.55
+colbert,0.9558,0.6347,0.5589,0.6167
